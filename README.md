@@ -13,5 +13,5 @@ On May 5th we want to advertize a brand new policy whereby you can cancel your o
 
  - Propose examples / scenarios to make sure we all understand the new behavior
  - Implement the new behavior behind a feature toggle with Cucumber-jvm or Specflow
-
+ - Refactor the code to make it simpler and using the right vocabulary!
  
