@@ -1,0 +1,17 @@
+# When I want to know if I can cancel the order
+# Then I should receive a positive answer
+# Then I could cancel it
+
+Scenario: Check if order is cancellable
+
+Given a purchase order with status = ORDER_SHIPPING
+When I want to know if I can cancel the order
+Then the result is false
+
+
+# Given I execute the order of Achat "SG" with the identifier 1234
+# Given I execute an order of Achat
+# Given a purchase order with status = ORDER_DONE
+# Given a purchase order with status as done
+# Given the purchase order state is done
+# Given the order is done or confirmed

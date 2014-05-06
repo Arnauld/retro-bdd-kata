@@ -1,30 +1,59 @@
 package com.martraire.training;
 
+import org.junit.Assert;
+
+import com.martraire.training.PurchaseOrder.ProcessingState;
+
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
-import cucumber.api.java.en.When;
-import cucumber.runtime.PendingException;
-
 
 public class CancellationPolicyStepDefs {
 
-	// TODO fill in steps here
+	private PurchaseOrder purchaseOrder;
+
+	@Given("^a done order$")
+	public void createADoneOrder() throws Throwable {
+		purchaseOrder = new PurchaseOrder(17L, "Label",
+				ProcessingState.ORDER_DONE);
+	}
+
+	@Given("^a shipped order$")
+	public void a_shipped_order() throws Throwable {
+		purchaseOrder = new PurchaseOrder(17L, "Label",
+				ProcessingState.ORDER_SHIPPING);
+	}
+
+	@Then("^the order should be cancellable$")
+	public void the_order_should_be_cancellable() throws Throwable {
+		Assert.assertTrue(purchaseOrder.isCancellable());
+	}
+
+	@Then("^the order should not be cancellable$")
+	public void the_order_should_not_be_cancellable() throws Throwable {
+		Assert.assertFalse(purchaseOrder.isCancellable());
+	}
+
+	@Given("^the shipped cancellation policy is activated$")
+	public void the_shipped_cancellation_policy_is_activated() throws Throwable {
+		Features.shippedCancellationPolicy = true;
+	}
+
+	@Given("^a shipped order with the cancellation number (\\d+)$")
+	public void a_shipped_order_with_the_cancellation_number(
+			int cancellationNumber) throws Throwable {
+		purchaseOrder = new PurchaseOrder(17L, cancellationNumber, "Label",
+				ProcessingState.ORDER_SHIPPING);
+	}
+
+	@Then("^the order should [ ]?be cancellable with the cancellation number (\\d+)$")
+	public void the_order_should_be_cancellable_with_the_cancellation_number(
+			int clientCancellationNumber) throws Throwable {
+		Assert.assertTrue(purchaseOrder.isCancellable(clientCancellationNumber));
+	}
 	
-	@Given("^something$")
-	public void something() throws Throwable {
-	    // Express the Regexp above with the code you wish you had
-	   throw new PendingException();
+	@Then("^the order should not be cancellable with the cancellation number (\\d+)$")
+	public void the_order_should_not_be_cancellable_with_the_cancellation_number(int clientCancellationNumber) throws Throwable {
+		Assert.assertFalse(purchaseOrder.isCancellable(clientCancellationNumber));
 	}
 
-	@When("^I do something else$")
-	public void I_do_something_else() throws Throwable {
-	    // Express the Regexp above with the code you wish you had
-	    throw new PendingException();
-	}
-
-	@Then("^I expect a result$")
-	public void I_expect_a_result() throws Throwable {
-	    // Express the Regexp above with the code you wish you had
-	    throw new PendingException();
-	}
 }
