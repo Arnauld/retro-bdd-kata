@@ -15,3 +15,7 @@ On May 5th we want to advertize a brand new policy whereby you can cancel your o
  - Implement the new behavior behind a feature toggle with Cucumber-jvm or Specflow
  - Refactor the code to make it simpler and using the right vocabulary!
  
+ Living Documentation
+ --------------------
+
+ The generated pdf is available here: [purchase-order.pdf](doc/pdf/purchase-order.pdf)
