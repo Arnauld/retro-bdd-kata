@@ -1,45 +1,32 @@
 package com.martraire.training;
 
-import com.martraire.training.PurchaseOrder.ProcessingState;
-
 public class PurchaseOrder {
 
-	public static enum ProcessingState {
-		ORDER_DONE, ORDER_CONFIRMED, ORDER_SHIPPING, ORDER_DELIVERED
-	}
+    private static final int UNDEFINED = Integer.MIN_VALUE;
 
-	private long id;
-	private String label;
-	private ProcessingState status;
-	private int cancellationNumber;
 
-	public PurchaseOrder(long id, String label, ProcessingState status) {
-		this(id, -1, label, status);
-	}
+    public static enum ProcessingState {
+        ORDER_DONE, ORDER_CONFIRMED, ORDER_SHIPPING, ORDER_DELIVERED
+    }
 
-	public PurchaseOrder(long id, int cancellationNumber, String label,
-			ProcessingState status) {
-		this.id = id;
-		this.cancellationNumber = cancellationNumber;
-		this.label = label;
-		this.status = status;
-	}
+    private final long id;
+    private final int cancellationNumber;
+    private final String label;
+    private final ProcessingState status;
 
-	public boolean isCancellable() {
-		return isCancellable(-2);
-	}
+    public PurchaseOrder(long id, int cancellationNumber, String label, ProcessingState status) {
+        this.id = id;
+        this.cancellationNumber = cancellationNumber;
+        this.label = label;
+        this.status = status;
+    }
 
-	public boolean isCancellable(int clientCancellationNumber) {
-		if (status == ProcessingState.ORDER_DONE) {
-			return true;
-		} else if (status == ProcessingState.ORDER_CONFIRMED) {
-			return true;
-		} else if (status == ProcessingState.ORDER_SHIPPING && Features.shippedCancellationPolicy) {
-			return clientCancellationNumber == cancellationNumber;
-		}
-		else {
-			return false;
-		}
-	}
+    public ProcessingState getStatus() {
+        return status;
+    }
+
+    public boolean isCancellationNumberValid(int cancellationNumber) {
+        return cancellationNumber == this.cancellationNumber;
+    }
 
 }
